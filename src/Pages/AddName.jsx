@@ -1,7 +1,7 @@
-import { Box, Card, CardContent, IconButton, TextField, Typography, CircularProgress, Button } from "@mui/material"
+import { Box, Card, CardContent, TextField, CircularProgress, Button } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
 import { useState, useEffect } from "react"
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FirestoreService from "../Utility/Services/FirestoreService"
 import { useQuery } from "@tanstack/react-query"
 import { useAtom } from "jotai";
@@ -12,7 +12,6 @@ export const AddName = () => {
     const searchParams = useParams()
     const roomID = searchParams.id
     const room = useQuery(['getRoom'], async ()=> await FirestoreService.getRoom(roomID))
-    const names = useQuery(['getAllNames'], async ()=> await FirestoreService.getAllNames(roomID))
     const [name, setName] = useState((empireData?.name ?? ''))
     const navigate = useNavigate();
     

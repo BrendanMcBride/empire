@@ -1,6 +1,5 @@
-import { Box, Card, CardContent, IconButton, TextField, Typography, CircularProgress, Button } from "@mui/material"
-import { useState, useEffect } from "react"
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Card, CircularProgress, Button } from "@mui/material"
+import { useNavigate, useParams } from "react-router-dom";
 import FirestoreService from "../Utility/Services/FirestoreService"
 import shuffle from "../Utility/shuffle"
 import { useQuery } from "@tanstack/react-query"

@@ -1,8 +1,7 @@
-import { Box, Card, CardContent, IconButton, TextField, Typography, CircularProgress, Button } from "@mui/material"
-import SearchIcon from '@mui/icons-material/Search';
+import { Box, Card, CardContent, IconButton, CircularProgress, Button } from "@mui/material"
 import ShareIcon from '@mui/icons-material/Share';
 import { useState, useEffect } from "react"
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FirestoreService from "../Utility/Services/FirestoreService"
 import { useQuery } from "@tanstack/react-query"
 import CustomizedSnackbars from "../Components/CustomizedSnackbars";

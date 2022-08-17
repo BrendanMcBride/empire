@@ -6,7 +6,6 @@ import FirestoreService from "../Utility/Services/FirestoreService"
 import AddIcon from '@mui/icons-material/Add';
 import { useAtom } from "jotai";
 import { empireDataAtom } from '../State/Global.js'
-import CustomizedSnackbars from "../Components/CustomizedSnackbars"
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 export const Home = () => {
