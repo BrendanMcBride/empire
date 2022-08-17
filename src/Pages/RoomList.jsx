@@ -42,13 +42,13 @@ export const RoomList = () => {
     <Card sx={{ display: 'flex', flexDirection: 'column' }}>
         <BasicTable rows={shuffle(names.data)}/>
         <Button 
-                        variant="outlined" 
-                        style={{color: 'red', borderColor: 'red'}}
-                        startIcon={<DeleteIcon />} 
-                        onClick={()=> deleteRoom()}
-                    >
-                        Delete Room
-                    </Button>
+            variant="outlined" 
+            style={{color: 'red', borderColor: 'red'}}
+            startIcon={<DeleteIcon />} 
+            onClick={()=> deleteRoom()}
+        >
+            Delete Room
+        </Button>
     </Card>
 </div>
 

@@ -59,9 +59,6 @@ export const Room = () => {
     <Card sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 300 }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography style={{ textAlign: 'center' }}>
-                    Empires: Name Game
-                </Typography>
                 <div style={{ display: 'flex', justifyContent: 'center', padding: 15 }}>
                     <Button 
                         variant="outlined" 

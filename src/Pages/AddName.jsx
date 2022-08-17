@@ -66,9 +66,6 @@ export const AddName = () => {
     <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 300 }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography style={{ textAlign: 'center' }}>
-                    Empires: Name Game
-                </Typography>
                 <div style={{ display: 'flex', justifyContent: 'center', padding: 25 }}>
                     <TextField
                         inputProps={{style: {'textAlign': 'center'}}}
@@ -83,7 +80,7 @@ export const AddName = () => {
                         startIcon={<AddIcon />} 
                         onClick={()=> updateName()}
                     >
-                        Update
+                        {(empireData.nameID != null ? 'Update' : 'Add')}
                     </Button>
                 </div>
             </CardContent>
