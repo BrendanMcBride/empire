@@ -1,4 +1,4 @@
-import { empireDB } from "../empireFirestore";
+import { empireDB } from "../Firestore";
 import {
   collection,
   query,

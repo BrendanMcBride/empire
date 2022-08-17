@@ -1,6 +1,6 @@
 import { Card, CircularProgress, Button } from "@mui/material"
 import { useNavigate, useParams } from "react-router-dom";
-import EmpireFirestoreService from "../Utility/Services/EmpireFirestoreService"
+import FirestoreService from "../Utility/Services/FirestoreService"
 import shuffle from "../Utility/shuffle"
 import { useQuery } from "@tanstack/react-query"
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,11 +12,11 @@ export const RoomList = () => {
     const [empireData, setEmpireData] = useAtom(empireDataAtom)
     const searchParams = useParams()
     const roomID = searchParams.id
-    const names = useQuery(['getAllNames'], async ()=> await EmpireFirestoreService.getAllNames(roomID))
+    const names = useQuery(['getAllNames'], async ()=> await FirestoreService.getAllNames(roomID))
     const navigate = useNavigate();
 
     const deleteRoom = () => {
-        EmpireFirestoreService.deleteRoom(roomID).then((response) => {
+        FirestoreService.deleteRoom(roomID).then((response) => {
             console.log("Room deleted successfully.")
             setEmpireData({...empireData, roomID: null })
             navigate(`/`, { replace: false })

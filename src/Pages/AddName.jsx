@@ -2,7 +2,7 @@ import { Box, Card, CardContent, TextField, CircularProgress, Button } from "@mu
 import AddIcon from '@mui/icons-material/Add';
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom";
-import EmpireFirestoreService from "../Utility/Services/EmpireFirestoreService"
+import FirestoreService from "../Utility/Services/FirestoreService"
 import { useQuery } from "@tanstack/react-query"
 import { useAtom } from "jotai";
 import { empireDataAtom } from '../State/Global.js'
@@ -11,7 +11,7 @@ export const AddName = () => {
     const [empireData, setEmpireData] = useAtom(empireDataAtom)
     const searchParams = useParams()
     const roomID = searchParams.id
-    const room = useQuery(['getRoom'], async ()=> await EmpireFirestoreService.getRoom(roomID))
+    const room = useQuery(['getRoom'], async ()=> await FirestoreService.getRoom(roomID))
     const [name, setName] = useState((empireData?.name ?? ''))
     const navigate = useNavigate();
     
@@ -30,7 +30,7 @@ export const AddName = () => {
         }
 
         if(empireData.nameID != null){
-            EmpireFirestoreService.updateName(empireData.nameID, nameData).then((response) => {
+            FirestoreService.updateName(empireData.nameID, nameData).then((response) => {
                 console.log("Room updated successfully.")
                 setEmpireData({...empireData, name: name })
                 navigate(`/`, { replace: false })
@@ -39,7 +39,7 @@ export const AddName = () => {
             })
         }
         else{
-            EmpireFirestoreService.addName(nameData).then((response) => {
+            FirestoreService.addName(nameData).then((response) => {
                 console.log("name added successfully.")
                 setEmpireData({...empireData, name: name, nameID: response })
                 navigate(`/`, { replace: false })
