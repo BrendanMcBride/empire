@@ -2,7 +2,7 @@ import { Box, Card, CardContent, IconButton, CircularProgress, Button } from "@m
 import ShareIcon from '@mui/icons-material/Share';
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom";
-import FirestoreService from "../Utility/Services/FirestoreService"
+import EmpireFirestoreService from "../Utility/Services/EmpireFirestoreService"
 import { useQuery } from "@tanstack/react-query"
 import CustomizedSnackbars from "../Components/CustomizedSnackbars";
 import AddIcon from '@mui/icons-material/Add';
@@ -15,8 +15,8 @@ export const Room = () => {
     const [empireData, setEmpireData] = useAtom(empireDataAtom)
     const searchParams = useParams()
     const roomID = searchParams.id
-    const room = useQuery(['getRoom'], async ()=> await FirestoreService.getRoom(roomID))
-    const names = useQuery(['getAllNames'], async ()=> await FirestoreService.getAllNames(roomID))
+    const room = useQuery(['getRoom'], async ()=> await EmpireFirestoreService.getRoom(roomID))
+    const names = useQuery(['getAllNames'], async ()=> await EmpireFirestoreService.getAllNames(roomID))
     const [nameCount, setNameCount] = useState(0)
     const [shareState, setShareState] = useState(false)
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ export const Room = () => {
     }, [names])
 
     const deleteRoom = () => {
-        FirestoreService.deleteRoom(roomID).then((response) => {
+        EmpireFirestoreService.deleteRoom(roomID).then((response) => {
             console.log("Room deleted successfully.")
             setEmpireData({...empireData, roomID: null })
             navigate(`/`, { replace: false })

@@ -2,7 +2,7 @@ import { Box, Button, Card, CardContent, IconButton, TextField, Typography } fro
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import FirestoreService from "../Utility/Services/FirestoreService"
+import EmpireFirestoreService from "../Utility/Services/EmpireFirestoreService"
 import AddIcon from '@mui/icons-material/Add';
 import { useAtom } from "jotai";
 import { empireDataAtom } from '../State/Global.js'
@@ -20,7 +20,7 @@ export const Home = () => {
             navigate(`/Room/${empireData.roomID}`, { replace: false })
         }
         else{
-            FirestoreService.addRoom(roomID).then((response) => {
+            EmpireFirestoreService.addRoom(roomID).then((response) => {
                 console.log("Room added successfully.")
                 setEmpireData({roomID: roomID, name: null, nameID: null})
                 navigate(`/Room/${roomID}`, { replace: false })
