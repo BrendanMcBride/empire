@@ -6,6 +6,7 @@ import FirestoreService from "../Utility/Services/FirestoreService"
 import { useQuery } from "@tanstack/react-query"
 import { useAtom } from "jotai";
 import { empireDataAtom } from '../State/Global.js'
+import CustomizedSnackbars from "../Components/CustomizedSnackbars";
 
 export const AddName = () => {
     const [empireData, setEmpireData] = useAtom(empireDataAtom)
@@ -13,12 +14,13 @@ export const AddName = () => {
     const roomID = searchParams.id
     const room = useQuery(['getRoom'], async ()=> await FirestoreService.getRoom(roomID))
     const [name, setName] = useState((empireData?.name ?? ''))
+    const [updateNameStatus, setUpdateNameStatus] = useState(false)
     const navigate = useNavigate();
     
     useEffect(() => {
         if((room?.data?.error ?? null) != null){
             setEmpireData({roomID: null, name: null, nameID: null})
-            navigate(`/`, { replace: false })
+            navigate(`/Empires`, { replace: false })
         }
     }, [room])
 
@@ -31,18 +33,18 @@ export const AddName = () => {
 
         if(empireData.nameID != null){
             FirestoreService.updateName(empireData.nameID, nameData).then((response) => {
+                setUpdateNameStatus(true)
                 console.log("Room updated successfully.")
                 setEmpireData({...empireData, name: name })
-                navigate(`/`, { replace: false })
             }).catch((e) => {
                 console.log("Error occured while adding the room." + e)
             })
         }
         else{
             FirestoreService.addName(nameData).then((response) => {
+                setUpdateNameStatus(true)
                 console.log("name added successfully.")
                 setEmpireData({...empireData, name: name, nameID: response })
-                navigate(`/`, { replace: false })
             }).catch((e) => {
                 console.log("Error occured while adding the room." + e)
             })
@@ -62,12 +64,11 @@ export const AddName = () => {
     }
 
     return <div style={{ display: 'flex', justifyContent: 'center', padding: 25 }}>
-    <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
+    <Card>
         <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 300 }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', padding: 25 }}>
                     <TextField
-                        inputProps={{style: {'textAlign': 'center'}}}
                         id="outlined-name"
                         label="Name"
                         value={name}
@@ -84,6 +85,7 @@ export const AddName = () => {
                 </div>
             </CardContent>
         </Box>
+        <CustomizedSnackbars message={`Name updated successfully!`} open={updateNameStatus} openFunction={setUpdateNameStatus} severity="success" />
     </Card>
 </div>
 

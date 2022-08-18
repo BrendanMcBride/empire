@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, IconButton, CircularProgress, Button } from "@mui/material"
+import { Box, Card, CardContent, IconButton, CircularProgress, Button, Typography } from "@mui/material"
 import ShareIcon from '@mui/icons-material/Share';
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,7 +24,7 @@ export const Room = () => {
     useEffect(() => {
         if((room?.data?.error ?? null) != null){
             setEmpireData({...empireData, roomID: null })
-            navigate(`/`, { replace: false })
+            navigate(`/Empires`, { replace: false })
         }
     }, [room])
 
@@ -36,7 +36,7 @@ export const Room = () => {
         FirestoreService.deleteRoom(roomID).then((response) => {
             console.log("Room deleted successfully.")
             setEmpireData({...empireData, roomID: null })
-            navigate(`/`, { replace: false })
+            navigate(`/Empires`, { replace: false })
         }).catch((e) => {
             console.log("Error occured while deleting the room." + e)
         })
@@ -58,6 +58,9 @@ export const Room = () => {
     <Card sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 300 }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
+                <Typography style={{textAlign: 'center'}}>
+                    <strong>Room ID: {roomID}</strong>
+                </Typography>
                 <div style={{ display: 'flex', justifyContent: 'center', padding: 15 }}>
                     <Button 
                         variant="outlined" 
@@ -82,7 +85,7 @@ export const Room = () => {
             <div style={{ display: 'flex', justifyContent: 'center'}}>
                 <IconButton 
                   onClick={()=> { 
-                    navigator.clipboard.writeText(`https://smiley.dbservices.com/AddName/${roomID}`).then(()=> {
+                    navigator.clipboard.writeText(`https://smiley.servebeer.com/AddName/${roomID}`).then(()=> {
                         setShareState(true)
                       },(e)=>{
                         console.log(`Text Could Not Be Coppied: ${e}`)
