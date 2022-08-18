@@ -10,6 +10,7 @@ import {
   addDoc,
   getDoc,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 
 async function getRoom(roomID) {
@@ -56,6 +57,15 @@ async function getAllNames(roomID) {
 
   return results;
 }
+
+const subNames = (setStateFunction) => {
+  const nameRef = collection(db, "name");
+  //real time update
+  onSnapshot(nameRef, (snapshot) => {
+    const data = snapshot.docs.map((doc) => doc.data());
+    setStateFunction(data);
+  });
+};
 
 async function addName(nameData) {
   nameData = { ...nameData, creationTstamp: Date.now() };
@@ -104,4 +114,5 @@ export default {
   addName,
   updateName,
   deleteName,
+  subNames,
 };

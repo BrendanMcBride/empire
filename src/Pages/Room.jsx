@@ -16,7 +16,7 @@ export const Room = () => {
     const searchParams = useParams()
     const roomID = searchParams.id
     const room = useQuery(['getRoom'], async ()=> await FirestoreService.getRoom(roomID))
-    const names = useQuery(['getAllNames'], async ()=> await FirestoreService.getAllNames(roomID))
+    const [names, setNames] = useState([])
     const [nameCount, setNameCount] = useState(0)
     const [shareState, setShareState] = useState(false)
     const navigate = useNavigate();
@@ -29,8 +29,12 @@ export const Room = () => {
     }, [room])
 
     useEffect(() => {
-        setNameCount((Object.keys(names?.data ?? []).length))
+        setNameCount((Object.keys(names ?? []).length))
     }, [names])
+
+    useEffect(() => {
+        FirestoreService.subNames(setNames)
+        }, [])
 
     const deleteRoom = () => {
         FirestoreService.deleteRoom(roomID).then((response) => {
