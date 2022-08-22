@@ -101,13 +101,13 @@ export const Room = () => {
             </div>
         </Box>
         <Button 
-                        variant="outlined" 
-                        style={{color: 'red', borderColor: 'red', marginTop: 15}}
-                        startIcon={<DeleteIcon />} 
-                        onClick={()=> deleteRoom()}
-                    >
-                        Delete Room
-                    </Button>
+            variant="outlined" 
+            style={{color: 'red', borderColor: 'red', marginTop: 15}}
+            startIcon={<DeleteIcon />} 
+            onClick={()=> deleteRoom()}
+        >
+            Delete Room
+        </Button>
         <CustomizedSnackbars message={'Results copied to clipboard'} open={shareState} openFunction={setShareState} severity="success" />
     </Card>
 </div>

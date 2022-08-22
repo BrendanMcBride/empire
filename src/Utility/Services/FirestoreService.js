@@ -1,4 +1,4 @@
-import { empireDB } from "../Firestore";
+import { db } from "../Firestore";
 import {
   collection,
   query,
@@ -17,7 +17,7 @@ async function getRoom(roomID) {
   if (roomID == "" || roomID == null) {
     return { error: "roomID empty" };
   }
-  const docSnap = await getDoc(doc(empireDB, "room", roomID));
+  const docSnap = await getDoc(doc(db, "room", roomID));
   if (docSnap.data() == null) {
     return { error: "Room " + roomID + " not Found" };
   }
@@ -27,7 +27,7 @@ async function getRoom(roomID) {
 }
 
 async function getAllRooms() {
-  const roomRef = collection(empireDB, "room");
+  const roomRef = collection(db, "room");
   const q = query(roomRef);
 
   const querySnapshot = await getDocs(q);
@@ -45,7 +45,7 @@ async function getAllNames(roomID) {
     return { error: "roomID empty" };
   }
 
-  const roomRef = collection(empireDB, "name");
+  const roomRef = collection(db, "name");
   const q = query(roomRef, where("roomID", "==", roomID));
 
   const querySnapshot = await getDocs(q);
@@ -69,39 +69,39 @@ const subNames = (setStateFunction) => {
 
 async function addName(nameData) {
   nameData = { ...nameData, creationTstamp: Date.now() };
-  const docRef = await addDoc(collection(empireDB, "name"), nameData);
+  const docRef = await addDoc(collection(db, "name"), nameData);
   console.log("Document written with ID: ", docRef.id);
   return docRef.id;
 }
 
 async function addRoom(roomID) {
   const roomData = { creationTstamp: Date.now() };
-  const docRef = await setDoc(doc(empireDB, "room", roomID), roomData);
+  const docRef = await setDoc(doc(db, "room", roomID), roomData);
   // console.log("Document written with ID: ", docRef.id);
   return docRef;
 }
 
 async function updateName(id, data) {
-  const nameRef = doc(empireDB, "name", id);
+  const nameRef = doc(db, "name", id);
   const result = setDoc(nameRef, data, { merge: true });
   return result;
 }
 
 async function deleteRoom(id) {
-  const roomRef = collection(empireDB, "name");
+  const roomRef = collection(db, "name");
   const q = query(roomRef, where("roomID", "==", id));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     deleteName(doc.id);
   });
 
-  const result = await deleteDoc(doc(empireDB, "room", id));
+  const result = await deleteDoc(doc(db, "room", id));
 
   return result;
 }
 
 async function deleteName(id) {
-  const result = await deleteDoc(doc(empireDB, "name", id));
+  const result = await deleteDoc(doc(db, "name", id));
   return result;
 }
 
